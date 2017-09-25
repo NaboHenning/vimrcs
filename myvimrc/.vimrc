@@ -2,7 +2,6 @@
 "                               VIMRC
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               GENERAL
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -21,20 +20,52 @@ set laststatus=2
 " Ask if you wish to save instead of failing command
 set confirm
 " automatically cd into the directory that the file is in (this will break plugins if activated!!!)
-set autochdir                               
+" set autochdir                               
 set encoding=utf8
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               PLUGINS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'javacomplete'
+"Plugin 'davidhalter/jedi-vim'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'unblevable/quick-scope'
+Plugin 'tpope/vim-surround'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'elixhummel/setcolors.vim'
+
+call vundle#end()
+
+" filetype specific highlighting and intentation
+filetype plugin indent on
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               AUTOCOMPLETION
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("autocmd")
+  autocmd Filetype java setlocal omnifunc=javacomplete#Complete
+endif
+helptags $HOME/.vim/doc
+setlocal completefunc=javacomplete#CompleteParamsInfo
+inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
+inoremap <buffer> <C-S-Space> <C-X><C-U><C-P>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Eyecandy
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "highlight current row
-set cursorline
+"set cursorline
 " Enable Syntax highlighting
-syntax enable
+syntax on
 " Visual bell instead of beeping
 set visualbell
-" filetype specific highlighting and intentation
-filetype plugin indent on
+silent! colorscheme molokai
 
 " Display line numbers on the left
 set number
@@ -43,6 +74,32 @@ set confirm
 set scrolloff=5                     
 " keep at least 5 lines left/right
 set sidescrolloff=5                 
+" highlight text longer then 80 characters
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
+set relativenumber
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['white',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Searching
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -67,10 +124,14 @@ set softtabstop=4
 " Use spaces instead of tabs
 set expandtab
 set autoindent
+autocmd BufNewFile,BufRead *.tex,*.c,*.h set tabstop=2
+autocmd BufNewFile,BufRead *.tex,*.c,*.h set softtabstop=2
+autocmd BufNewFile,BufRead *.tex,*.c,*.h set shiftwidth=2
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Controll
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:filetype_pl="prolog"
 let mapleader = ","
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
@@ -79,7 +140,7 @@ set notimeout ttimeout ttimeoutlen=200
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               Undo
+"                               Undo and swap
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set history=1000
 " save undo's after file closes
@@ -90,6 +151,8 @@ set undodir=$HOME/.vim/undo
 set undolevels=1000                 
 " number of lines to save for undo
 set undoreload=10000                
+set directory=$HOME/.vim/swap//
+set backupdir=$HOME/.vim/backup//
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Mappings
@@ -105,16 +168,18 @@ nnoremap <leader><Tab>   :bnext<CR>
 nnoremap <leader><S-Tab> :bprevious<CR>
 
 " Toggle off arrow keys in command-mode
-map <up>    <nop>
-map <down>  <nop>
-map <left>  <nop>
-map <right> <nop>
+map <up>    <C-w>k
+map <down>  <C-w>j
+map <left>  <C-w>h
+map <right> <C-w>l
 
 nnoremap <leader>i I\item <Esc>
 nnoremap <Space> :
 " Add ; at end of line
 inoremap <leader>; <C-o>A;
+nnoremap <leader>; A;<Esc>
 inoremap <leader>m <Esc>
+nnoremap <leader>m :w<CR>
 nmap <leader>l :set list!<CR>
 map <leader>h <C-w>h
 map <leader>j <C-w>j
@@ -124,10 +189,23 @@ map <leader>H <C-w>H
 map <leader>J <C-w>J
 map <leader>K <C-w>K
 map <leader>L <C-w>L
-map <leader>b <C-w>s
-map <leader>v <C-w>v
+map <leader>s <C-w>s<C-w>j
+map <leader>v <C-w>v<C-w>l
+map <leader>B <C-w>s<C-w>j:bnext<CR>
+map <leader>V <C-w>v<C-w>l:bnext<CR>
+autocmd BufNewFile,BufRead *.py nnoremap <leader>s :w<CR> :!python3 %<CR>
+autocmd BufNewFile,BufRead *.c nnoremap <leader>s :w<CR> :!clang %<CR>
+autocmd BufNewFile,BufRead *.pl nnoremap <leader>s :w<CR> :!swipl %<CR>
 nnoremap <leader>/ /\v\d+<CR>
+nnoremap <leader>p :set spell! spelllang=sv<CR>
+noremap <C-c> <esc>
+inoremap <C-c> <esc>
 " Split row at cursor
 nnoremap <leader>c i<CR><Esc>
+nnoremap <C-j> i<CR><Esc>
 " Reset search with ctrl-l
 nnoremap <C-L> :nohl<CR><C-L>
+command! CD cd %:p:h
+" Make Y act as C and D
+nnoremap Y y$
+
