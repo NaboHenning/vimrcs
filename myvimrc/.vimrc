@@ -223,4 +223,8 @@ nnoremap <C-L> :nohl<CR><C-L>
 command! CD cd %:p:h
 " Make Y act as C and D
 nnoremap Y y$
-
+" Search for current word in multiple files
+nnoremap gr :grep <cword> *<CR>
+"nnoremap Gr :grep <cword> %:p:h/*<CR>
+nnoremap gR :grep '\b<cword>\b' *<CR>
+"nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
