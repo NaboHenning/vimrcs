@@ -39,12 +39,25 @@ Plugin 'unblevable/quick-scope'
 Plugin 'tpope/vim-surround'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'elixhummel/setcolors.vim'
+"Plugin 'elixhummel/setcolors.vim'
+Plugin 'davidhalter/jedi-vim.git'
+Plugin 'ervandew/supertab'
+Plugin 'nvie/vim-flake8'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 call vundle#end()
 
 " filetype specific highlighting and intentation
 filetype plugin indent on
+
+" Setup plugins
+autocmd BufWritePost *.py call Flake8()
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               AUTOCOMPLETION
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
