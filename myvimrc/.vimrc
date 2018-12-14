@@ -137,9 +137,9 @@ set softtabstop=4
 " Use spaces instead of tabs
 set expandtab
 set autoindent
-autocmd BufNewFile,BufRead *.tex,*.c,*.h set tabstop=2
-autocmd BufNewFile,BufRead *.tex,*.c,*.h set softtabstop=2
-autocmd BufNewFile,BufRead *.tex,*.c,*.h set shiftwidth=2
+autocmd BufNewFile,BufRead *.tex,*.c,*.h,*.yml,*.yaml set tabstop=2
+autocmd BufNewFile,BufRead *.tex,*.c,*.h,*.yml,*.yaml set softtabstop=2
+autocmd BufNewFile,BufRead *.tex,*.c,*.h,*.yml,*.yaml set shiftwidth=2
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Controll
