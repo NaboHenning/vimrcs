@@ -64,7 +64,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 if has("autocmd")
   autocmd Filetype java setlocal omnifunc=javacomplete#Complete
 endif
-helptags $HOME/.vim/doc
+"helptags $HOME/.vim/doc
 setlocal completefunc=javacomplete#CompleteParamsInfo
 inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
 inoremap <buffer> <C-S-Space> <C-X><C-U><C-P>
@@ -164,8 +164,8 @@ set undodir=$HOME/.vim/undo
 set undolevels=1000                 
 " number of lines to save for undo
 set undoreload=10000                
-set directory=$HOME/.vim/swap//
-set backupdir=$HOME/.vim/backup//
+" set directory=$HOME/.vim/swap//
+" set backupdir=$HOME/.vim/backup//
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Mappings
