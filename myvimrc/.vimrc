@@ -181,8 +181,10 @@ nnoremap <leader><Tab>   :bnext<CR>
 nnoremap <leader><S-Tab> :bprevious<CR>
 
 " Toggle off arrow keys in command-mode
-map <up>    <C-w>k
-map <down>  <C-w>j
+noremap <up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
+noremap <down>  ddp
+"map <up>  <C-w>k
+"map <down>  <C-w>j
 map <left>  <C-w>h
 map <right> <C-w>l
 
