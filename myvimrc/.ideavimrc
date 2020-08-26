@@ -40,32 +40,28 @@ Plugin 'tpope/vim-surround'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'flazz/vim-colorschemes'
 "Plugin 'elixhummel/setcolors.vim'
-Plugin 'davidhalter/jedi-vim.git'
-Plugin 'ervandew/supertab'
-Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'machakann/vim-highlightedyank'
+Plugin 'xuyuanp/nerdtree-git-plugin'
 
 call vundle#end()
 
 " filetype specific highlighting and intentation
 filetype plugin indent on
 
-" Setup plugins
-autocmd BufWritePost *.py call Flake8()
+" NERDtree
+map <C-n> :NERDTreeToggle<CR>
+" Start NERDtree if no file was specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <C-n> :NERDTreeToggle<CR>
+" Close NERDtree if it is the only window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               AUTOCOMPLETION
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
   autocmd Filetype java setlocal omnifunc=javacomplete#Complete
 endif
-"helptags $HOME/.vim/doc
+" helptags $HOME/.vim/doc
 setlocal completefunc=javacomplete#CompleteParamsInfo
 inoremap <buffer> <C-X><C-U> <C-X><C-U><C-P>
 inoremap <buffer> <C-S-Space> <C-X><C-U><C-P>
@@ -136,11 +132,11 @@ set shiftwidth=4
 " Number of spaces to use instead of tab if expandtab is set
 set softtabstop=4
 " Use spaces instead of tabs
-set expandtab
+set noexpandtab
 set autoindent
-autocmd BufNewFile,BufRead *.tex,*.c,*.h,*.yml,*.yaml set tabstop=2
-autocmd BufNewFile,BufRead *.tex,*.c,*.h,*.yml,*.yaml set softtabstop=2
-autocmd BufNewFile,BufRead *.tex,*.c,*.h,*.yml,*.yaml set shiftwidth=2
+autocmd BufNewFile,BufRead *.tex,*.c,*.h set tabstop=2
+autocmd BufNewFile,BufRead *.tex,*.c,*.h set softtabstop=2
+autocmd BufNewFile,BufRead *.tex,*.c,*.h set shiftwidth=2
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Controll
@@ -165,8 +161,8 @@ set undodir=$HOME/.vim/undo
 set undolevels=1000                 
 " number of lines to save for undo
 set undoreload=10000                
-" set directory=$HOME/.vim/swap//
-" set backupdir=$HOME/.vim/backup//
+set directory=$HOME/.vim/swap//
+set backupdir=$HOME/.vim/backup//
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                               Mappings
@@ -182,19 +178,15 @@ nnoremap <leader><Tab>   :bnext<CR>
 nnoremap <leader><S-Tab> :bprevious<CR>
 
 " Toggle off arrow keys in command-mode
-noremap <up> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
-noremap <down>  ddp
-"map <up>  <C-w>k
-"map <down>  <C-w>j
+map <up>    <C-w>k
+map <down>  <C-w>j
 map <left>  <C-w>h
 map <right> <C-w>l
 
 nnoremap <leader>i I\item <Esc>
 nnoremap <Space> :
 " Add ; at end of line
-inoremap <leader>; <C-o>A;
 nnoremap <leader>; A;<Esc>
-inoremap <leader>m <Esc>
 nnoremap <leader>m :w<CR>
 nmap <leader>l :set list!<CR>
 map <leader>h <C-w>h
@@ -224,8 +216,7 @@ nnoremap <C-L> :nohl<CR><C-L>
 command! CD cd %:p:h
 " Make Y act as C and D
 nnoremap Y y$
-" Search for current word in multiple files
-nnoremap gr :grep <cword> *<CR>
-"nnoremap Gr :grep <cword> %:p:h/*<CR>
-nnoremap gR :grep '\b<cword>\b' *<CR>
-"nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
+
+set ideajoin
+set surround
+set highlightedyank
